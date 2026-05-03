@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>ETHIC MIND</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            color: white;
+            background: linear-gradient(135deg, #1d2b64, #f8cdda);
+            transition: 1s;
+        }
+
+        table {
+            width: 100%;
+            height: 100vh;
+            border-collapse: collapse;
+        }
+
+        .header {
+            background: #000;
+            text-align: center;
+            padding: 15px;
+            font-size: 6vw;
+            color: #00eaff;
+        }
+
+        .menu {
+            width: 160px;
+            background: #111;
+            vertical-align: top;
+        }
+
+        .menu a {
+            display: block;
+            color: white;
+            padding: 20px;
+            text-decoration: none;
+        }
+
+        .menu a:hover {
+            background: #00eaff;
+            color: black;
+        }
+
+        .content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.75);
+            margin: auto;
+            padding: 45px;
+            border-radius: 25px;
+            width: 95%;
+            max-width: 900px;
+        }
+
+        #ads {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: 100%;
+            margin: 15px 0;
+            padding: 20px;
+            border: none;
+            border-radius: 15px;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .j { background: #3498db; }
+        .e { background: #e74c3c; }
+        .l { background: #2ecc71; }
+
+        .question { display: none; }
+        .active { display: block; }
+
+        #quiz { display: none; }
+        #result { display: none; margin-top: 20px; }
+
+        .footer {
+            background: #000;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <tr>
+        <td colspan="2" class="header">ETHIC MIND</td>
+    </tr>
+    <tr>
+        <td class="content">
+            <div class="card">
+                <div id="ads">مرحباً بك في ETHIC MIND</div>
+                
+                <button onclick="startTest()" id="startBtn">ابدأ الاختبار</button>
+
+                <div id="quiz">
+                    <div class="question active">
+                        <h3>وجدت مبلغ كبير من المال</h3>
+                        <button class="j" onclick="answer('justice')">تسليمه للشرطة</button>
+                        <button class="e" onclick="answer('emotional')">تبحث عن صاحبه</button>
+                        <button class="l" onclick="answer('logical')">تحتفظ به</button>
+                    </div>
+
+                    <div class="question">
+                        <h3>صديق أخطأ في حقك</h3>
+                        <button class="j" onclick="answer('justice')">تقاطعه</button>
+                        <button class="e" onclick="answer('emotional')">تسامحه</button>
+                        <button class="l" onclick="answer('logical')">تفكر بعقلانية</button>
+                    </div>
+
+                    <div class="question">
+                        <h3>شخص يطلب المساعدة</h3>
+                        <button class="j" onclick="answer('justice')">ترفض</button>
+                        <button class="e" onclick="answer('emotional')">تساعده</button>
+                        <button class="l" onclick="answer('logical')">تتحقق أولاً</button>
+                    </div>
+
+                    <div class="question">
+                        <h3>رأيت ظلماً</h3>
+                        <button class="j" onclick="answer('justice')">تبلغ عنه</button>
+                        <button class="e" onclick="answer('emotional')">تتدخل</button>
+                        <button class="l" onclick="answer('logical')">تحلل الوضع</button>
+                    </div>
+
+                    <div class="question">
+                        <h3>قرار صعب</h3>
+                        <button class="j" onclick="answer('justice')">تختار العدل</button>
+                        <button class="e" onclick="answer('emotional')">تتبع قلبك</button>
+                        <button class="l" onclick="answer('logical')">تحلل القرار</button>
+                    </div>
+                </div>
+
+                <div id="result"></div>
+            </div>
+        </td>
+        
+        <td class="menu">
+            <a href="#">Home</a>
+            <a href="#">Test</a>
+            <a href="#">About</a>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="footer">ETHIC MIND 2026</td>
+    </tr>
+</table>
+
+<script>
+    let i = 0;
+    let j = 0, e = 0, l = 0;
+    let q = document.querySelectorAll(".question");
+
+    let ads = [
+        "مرحباً بك في ETHIC MIND",
+        "اكتشف شخصيتك",
+        "هل أنت عاطفي؟",
+        "هل أنت عادل؟"
+    ];
+
+    let colors = [
+        "linear-gradient(135deg, #1d2b64, #f8cdda)",
+        "linear-gradient(135deg, #0f2027, #203a43)",
+        "linear-gradient(135deg, #ff512f, #dd2476)",
+        "linear-gradient(135deg, #141e30, #243b55)"
+    ];
+
+    let ai = 0;
+    let interval = setInterval(() => {
+        document.getElementById("ads").innerText = ads[ai];
+        document.body.style.background = colors[ai];
+        ai = (ai + 1) % ads.length;
+    }, 2500);
+
+    function startTest() {
+        document.getElementById("startBtn").style.display = "none";
+        document.getElementById("quiz").style.display = "block";
+    }
+
+    function answer(type) {
+        if (type == "justice") j++;
+        if (type == "emotional") e++;
+        if (type == "logical") l++;
+
+        q[i].classList.remove("active");
+        i++;
+
+        if (i < q.length) {
+            q[i].classList.add("active");
+        } else {
+            finish();
+        }
+    }
+
+    function finish() {
+        clearInterval(interval);
+        let text = "", desc = "", bg = "";
+
+        if (j > e && j > l) {
+            text = "أنت شخصية عادلة";
+            desc = "تحب الحق وتدافع عن العدالة";
+            bg = "linear-gradient(135deg, #1e3c72, #2a5298)";
+        } 
+        else if (e > j && e > l) {
+            text = "أنت شخصية عاطفية";
+            desc = "قلبك كبير وتحب مساعدة الناس";
+            bg = "linear-gradient(135deg, #ff416c, #ff4b2b)";
+        } 
+        else if (l > j && l > e) {
+            text = "أنت شخصية منطقية";
+            desc = "تفكر بعقل وتحلل الأمور";
+            bg = "linear-gradient(135deg, #11998e, #38ef7d)";
+        } 
+        else {
+            text = "أنت شخصية متوازنة";
+            desc = "توازن بين العاطفة والمنطق والعدل";
+            bg = "linear-gradient(135deg, #8e44ad, #3498db)";
+        }
+
+        document.getElementById("ads").innerText = text;
+        document.body.style.background = bg;
+        document.getElementById("quiz").style.display = "none";
+
+        let r = document.getElementById("result");
+        r.style.display = "block";
+        r.innerHTML = `
+            <h2>${text}</h2>
+            <p>${desc}</p>
+            <p>العدل: ${j} | العاطفة: ${e} | المنطق: ${l}</p>
+            <br>
+            <button onclick="location.reload()">إعادة الاختبار</button>
+        `;
+    }
+</script>
+
+</body>
+                  </html>
+                  
